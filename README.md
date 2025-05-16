@@ -28,4 +28,4 @@ Check code for redundancies (unncessary execution of functions, etc.)
 ~~King captures and checks~~ ~~(still need to check this thoroughly -- the kind isn't able to move during check)~~ \
 ~~Detect checkmate~~ \ 
 ~~3-fold rep~~ \
-~~50-move rule~~ \
+~~50-move rule~~
