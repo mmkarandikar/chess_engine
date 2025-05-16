@@ -1,0 +1,332 @@
+/* Create Board */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+body {
+    font-family:'Trebuchet MS';
+    background-color: #604020; 
+    padding: 20px;
+    color: #333;
+}
+
+
+.chess-board {
+    width: 500px;
+    height: 500px;
+    border: 2px solid #604020;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
+
+.result {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    left: 470px;
+    top: 55px;
+    background-color: rgba(96, 64, 32, 0.5);
+    color: #000000;
+    font-weight: bold;
+    z-index: 10;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#movesTable {
+    margin-top:-450px;
+    margin-left: 975px;
+    width: 250px;
+    border-collapse: collapse;
+    background-color: #f0d9b5;
+    color: black;
+    /* border: 1px solid black; */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    width: 10px;
+    text-align: center;
+  }
+
+.buttonNewGame {
+    border: none;
+    width: 90px;
+    height: 25px;
+    background-color: #b58863;
+    color: #f0d9b5;
+    position: relative;
+    left: 975px;
+    top: 25px;
+    border-radius: 7.5%;
+}
+
+.buttonNewGame:hover {
+    border: none;
+    width: 90px;
+    height: 25px;
+    background-color: black;
+    color: #f0d9b5;
+}
+
+.overlayNewGameButton {
+    position: absolute;
+    border: none;
+    width: 90px;
+    height: 25px;
+    background-color: #000000;
+    color: #ffffff;
+    top: 275px;
+    border-radius: 7.5%;
+}
+
+.overlayNewGameButton:hover{
+    opacity: 0.75;
+}
+
+.buttonUndo {
+    border: none;
+    width: 90px;
+    height: 25px;
+    background-color: #b58863;
+    color: #f0d9b5;
+    position: relative;
+    left: 225px;
+    top: 25px;
+    border-radius: 7.5%;
+}
+
+
+.allowedMovesDot {
+    position: relative;
+    height: 15px;
+    width: 15px;
+    background-color: teal;
+    border-radius: 50%;
+}
+
+.attackDot {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    opacity: 0.35;
+}
+
+.playerbox{
+    display: flex;
+    position: absolute;
+    height: 30px;
+    width: 160px;
+    top: 100px;
+    left: 212.5px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+}
+
+.playerbox-black{
+    top: 20px;
+    left: 470px;
+    background-color: #b58863;
+}
+
+.playerbox-white{
+    top: 560px;
+    left: 810px;
+    background-color: #f0d9b5;
+    
+}
+
+/* This box contains the captured black pieces and is placed on the white end of the board */
+.capturebox-white{
+    position: absolute;
+    top: 560px;
+    left: 470px;
+    width: 250px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    background-color: #b58863;
+}
+
+/* This box contains the captured white pieces and is placed on the black end of the board */
+.capturebox-black{
+    position: absolute;
+    top: 20px;
+    left: 720px;
+    width: 250px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    background-color: #f0d9b5;
+}
+
+.active-player-dot {
+    position: relative;
+    left: 7.5px;
+    height: 10px;
+    width: 10px;
+    background-color: green;
+    border-radius: 50%;
+}
+
+.active-player-dot {
+    animation: pulseGlow 1.5s infinite ease-in-out;
+  }
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 5px black, 0 0 10px black;
+    }
+    50% {
+      box-shadow: 0 0 15px black, 0 0 30px black;
+    }
+  }
+
+/* Define Squares */
+.square{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+/* .promotion-square{
+    position: absolute;
+    height: 62.5px;
+    width: 250px;
+    top: -10px;
+    left: 593.75px;
+    background-color: #f0d9b5;
+} */
+
+.promotion-file{
+    position: absolute;
+    height: 62.5px;
+    width: 250px;
+    top: -10px;
+    left: 593.75px;
+    background-color: #604020;
+    z-index: 0;
+}
+
+.selected-square{
+    background-color: rgb(186, 186, 186);
+}
+
+
+.dest-square{
+    display: flex;
+}
+
+.dest-square:hover {
+    background-color: #604020;
+}
+
+
+.light-square{
+    background-color: #f0d9b5;
+}
+
+.dark-square{
+    background-color: #b58863;
+}
+
+.check-square{
+    background: radial-gradient(#e66465, #9198e5);
+}
+
+/* Define Pieces */
+.piece {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    --moves: [];
+}
+
+.white-piece{
+    --type: "white";
+}
+
+.black-piece{
+    --type: "black";
+}
+
+.white-rook {
+    background-image: url("../pieces/wr.png");
+    --type: "white";
+}
+
+.white-pawn {
+    background-image: url("../pieces/wp.png");
+    --type: "white";
+}
+
+.white-knight {
+    background-image: url("../pieces/wn.png");
+    --type: "white";
+}
+
+.white-bishop {
+    background-image: url("../pieces/wb.png");
+    --type: "white";
+}
+
+.white-queen {
+    background-image: url("../pieces/wq.png");
+    --type: "white";
+}
+
+.white-king {
+    background-image: url("../pieces/wk.png");
+    --type: "white";
+}
+
+.black-rook {
+    background-image: url("../pieces/br.png");
+    --type: "black";
+}
+
+.black-pawn {
+    background-image: url("../pieces/bp.png");
+    --type: "black";
+}
+
+.black-knight {
+    background-image: url("../pieces/bn.png");
+    --type: "black";
+}
+
+.black-bishop {
+    background-image: url("../pieces/bb.png");
+    --type: "black";
+}
+
+.black-queen {
+    background-image: url("../pieces/bq.png");
+    --type: "black";
+}
+
+.black-king {
+    background-image: url("../pieces/bk.png");
+    --type: "black";
+}

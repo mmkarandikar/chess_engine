@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script type="module" src="./root.js"></script>
+<body>
+    <button id="newGame" class="buttonNewGame">New Game</button> 
+    <!-- <button id="undo" class="buttonUndo">Undo Move</button>  -->
+    <!-- <div id="welcomeBox" class="welcome-box">
+      Welcome to Shatranj!
+    </div> -->
+
+    <div id="playerBoxWhite" class="playerbox playerbox-white">
+      Player 1 (white)
+    </div>
+    <div id="playerBoxBlack" class="playerbox playerbox-black">
+      Player 2 (black)
+    </div>
+
+    <div id="cboxWhite" class="capturebox-white"></div>
+    <div id="cboxBlack" class="capturebox-black"></div>
+
+    <div class="chess-board">
+      <script type="module">
+        import { createBoard } from "./functions.js"
+        createBoard();
+        </script>
+    </div>
+    <table id="movesTable" class="moveTable">
+        <tbody>
+          <!-- Moves are recorded here -->
+        </tbody>
+    </table>
+</body>
+</html>
