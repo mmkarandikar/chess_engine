@@ -1,6 +1,6 @@
 In this project, I will try to create a chess engine using traditional, non ML methods. My primary resource is the [chess programming website](https://www.chessprogramming.org/Getting_Started). In the first part of the project, I create the frontend using HTML/CSS and scripting in JS.
 
-# To Do: \
+# To Do:
 Queening choice \
 Material Count \
 Moves table scroll \
