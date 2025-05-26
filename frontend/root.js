@@ -1,6 +1,6 @@
 import { renderBoard, squareLookupTable, findLegalMoves } from './functions.js'
 import { makeMove } from './moves.js';
-import { genMoveEntry, checkThreeFoldRep, pieceToUnicode, pieceSortOrder, isOccupied } from './helpers.js'
+import { genMoveEntry, checkThreeFoldRep, pieceToUnicode, pieceSortOrder, pieceNameToValue } from './helpers.js'
 
 // Initialise global variables
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'; // Initial board position
@@ -94,32 +94,21 @@ function playAgainstHuman(movesTable){
     let capturedByBlack = [];  // Keep track of pieces captured by black
     let capturedPiece;
     let pieceScore;
-    let touchedPiece = false;
 
     document.querySelectorAll('.square').forEach(square => {
         // When clicking a square / dragging a piece
         square.addEventListener('click', (event) => {
-                let [clickedPiece, allMoves] = selectSquare(event);
-                console.log('1', event.target, document.querySelectorAll('.selected-square'));
-                console.log('2', event.currentTarget, clickedPiece);
 
-                // if (event.target.classList.contains('allowedMovesDot')){
-
-                // }
+            if (event.currentTarget.classList.contains('dest-square')){
+                let moveElements = document.querySelectorAll('.selected-square');
+                sourceSquare = moveElements[0];
+                draggedPiece = moveElements[1];
+                dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, cboxWhite, cboxBlack, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
+            }
+            else {
+                selectSquare(event);
+            }
         });
-
-        // square.addEventListener('click', (event) => {
-        //     console.log(event.currentTarget.classList)
-        //     if (event.currentTarget.classList.contains('dest-square')){
-        //         console.log(event.currentTarget)
-        //         dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, cboxWhite, cboxBlack, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
-        //     }
-        //     else {
-        //         selectSquare(event);
-        //     }
-        // });
-
-        
 
         square.addEventListener('mousedown', function(e) {
             const pieceElement = square.querySelector('.piece');
@@ -169,6 +158,11 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
 
                 // If a piece is captured, add piece to the indicator for captured pieces
                 if (capturedPiece){
+
+                    // Find the numerical value of the captured piece and add it to pieceCount
+                    console.log(capturedPiece, pieceNameToValue(capturedPiece))
+                    // console.log()
+
                     if (capturedPiece.split('-')[0] == 'black'){
                         let capturedPieceCodes = [];
                         capturedByWhite.push(capturedPiece.split('-')[1]);
@@ -206,7 +200,6 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
                 }
                 if (turnToPlay == 'white'){
                     let row = movesTable.insertRow();
-                    console.log(row)
                     let whiteCell = row.insertCell();
                     whiteMove = `${targetSquare.id}`
                     turnToPlay = 'black';
@@ -220,7 +213,6 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
                 }
                 else if (turnToPlay == 'black'){
                     let blackCell = movesTable.rows[movesTable.rows.length - 1].insertCell();
-                    console.log(blackCell);
                     blackCell.textContent = `${lastMove}`;
                     blackMove = `${targetSquare.id}`
                     turnToPlay = 'white';
@@ -247,7 +239,8 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
             if (Number(currentPosition.split(' ')[4]) == 50){
                 endGame(turnToPlay, targetSquare, 'the 50-move rule');
             }
-
+            // Remove all visual elements (i.e. attack/move highlights) at the end of each move
+            removeSquareVisuals();
     };
 };
 

@@ -287,3 +287,32 @@ export function pieceToUnicode(piece) {
 }
 
 export const pieceSortOrder = ['pawn', 'knight', 'bishop', 'rook', 'queen'];
+
+export function pieceNameToValue(pieceName){
+  // First, let's find the colour of the piece
+  let pieceType = pieceName.split('-')[1]
+  let pieceValue;
+  // Finally, append the piece type
+  if (pieceType === 'pawn'){
+    pieceValue = 1;
+  }
+  else if (pieceType === 'rook'){
+        pieceValue = 5;
+  }
+  else if (pieceType === 'bishop'){
+        pieceValue = 3;
+  }
+  else if (pieceType === 'knight'){
+        pieceValue = 3;
+  }
+  else if (pieceType === 'queen'){
+        pieceValue = 9;
+  }
+  else if (pieceType === 'king'){
+        pieceValue = 200; // King gets an arbitrarily high value
+  }
+  else {
+    throw new TypeError(`Invalid piece name ${pieceName}`);
+  }
+  return pieceValue
+}
