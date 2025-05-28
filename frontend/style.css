@@ -16,6 +16,8 @@ body {
 .chess-board {
     width: 500px;
     height: 500px;
+    position: relative;
+    top: -75px;
     border: 2px solid #604020;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     margin: auto;
@@ -25,11 +27,13 @@ body {
 }
 
 .result {
-    position: absolute;
+    position: relative;
+    display: flex;
+    margin: auto;
     height: 500px;
     width: 500px;
-    left: 470px;
-    top: 55px;
+    left: 0px;
+    top: -724px;
     background-color: rgba(96, 64, 32, 0.5);
     color: #000000;
     font-weight: bold;
@@ -37,18 +41,21 @@ body {
     text-align: center;
     align-items: center;
     justify-content: center;
-    display: flex;
 }
 
 
 #movesTable {
+    position: relative;
+    margin: auto;
     border-collapse: collapse;
     background-color: #f0d9b5;
     color: black;
-    position: absolute;
-    top: 55px;
-    left: 1000px;
+    top: -575px;
+    left: 407.5px;
     width: 250px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .table-wrapper {
@@ -65,14 +72,19 @@ th, td {
   }
 
 .buttonNewGame {
+    position: relative;
+    display: flex;
+    left: 328px;
+    top: 45px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
     border: none;
     width: 90px;
     height: 25px;
     background-color: #b58863;
     color: #f0d9b5;
-    position: relative;
-    left: 275px;
-    top: -10px;
     border-radius: 7.5%;
 }
 
@@ -129,35 +141,36 @@ th, td {
 
 .playerbox{
     display: flex;
-    position: absolute;
+    position: relative;
     height: 30px;
     width: 160px;
-    top: 100px;
-    left: 212.5px;
+    /* top: 00px; */
+    /* left: 212.5px; */
     justify-content: center;
     align-items: center;
     text-align: center;
     color: black;
+    margin: auto;
 }
 
 .playerbox-black{
-    top: 20px;
-    left: 470px;
+    top: -15px;
+    left: 170px;
     background-color: #b58863;
 }
 
 .playerbox-white{
-    top: 560px;
-    left: 810px;
+    top: 547.5px;
+    left: -170px;
     background-color: #f0d9b5;
     
 }
 
 /* This box contains the captured black pieces and is placed on the white end of the board */
 .capturebox-white{
-    position: absolute;
-    top: 560px;
-    left: 470px;
+    position: relative;
+    top: 487.5px;
+    left: 80px;
     width: 340px;
     height: 30px;
     display: flex;
@@ -166,13 +179,14 @@ th, td {
     text-align: center;
     font-size: 25px;
     background-color: #b58863;
+    margin: auto;
 }
 
 /* This box contains the captured white pieces and is placed on the black end of the board */
 .capturebox-black{
-    position: absolute;
-    top: 20px;
-    left: 630px;
+    position: relative;
+    top: -75px;
+    left: -80px;
     width: 340px;
     height: 30px;
     display: flex;
@@ -181,6 +195,7 @@ th, td {
     text-align: center;
     font-size: 25px;
     background-color: #f0d9b5;
+    margin: auto;
 }
 
 .active-player-dot {
