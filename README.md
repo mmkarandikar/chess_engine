@@ -1,9 +1,9 @@
-# Shatranj:
+# Shatranj
 In this project, I will try to create a chess engine using traditional, non ML methods. My primary resource is the [chess programming website](https://www.chessprogramming.org/Getting_Started). In the first part of the project, I created the frontend using HTML/CSS and scripting in JS. Next, I will write the backend code in Python.
 
 
 
-# To Do:
+# To Do
 Backend:
 - Establish connection between frontend and backend
 

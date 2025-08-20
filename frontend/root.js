@@ -4,6 +4,8 @@ import { genMoveEntry, checkThreeFoldRep, pieceToUnicode, pieceSortOrder, pieceN
 
 // Initialise global variables
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'; // Initial board position
+// const INITIAL_FEN = 'rnbqkbnr/ppppp11p/8/8/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1'; // Initial board position
+
 var currentPosition = INITIAL_FEN;
 var turnToPlay;
 var draggedPiece = null;
@@ -17,20 +19,22 @@ var check = false;
 
 // Remove all existing visual elements for selected piece and legal moves
 function removeSquareVisuals(){
+    // Clicked squares
     const clickedSquares = document.querySelectorAll('.selected-square');
     for (let cSquare of clickedSquares){
         cSquare.classList.remove('selected-square');
     }
-
+    // Destination squares
     const destSquares = document.querySelectorAll('.dest-square');
     for (let square of destSquares){
         square.classList.remove('dest-square');
-    }    
-    
+    }
+    // Legal moves dots
     const legalDots = document.querySelectorAll('.allowedMovesDot');
     for (let dot of legalDots){
         dot.remove();
     };
+    // Attack moves dots
     const attackDots = document.querySelectorAll('.attackDot');
     for (let dot of attackDots){
         dot.remove();
@@ -88,8 +92,6 @@ function playAgainstHuman(movesTable){
     let blackPlayerBox = document.getElementById('playerBoxBlack');
 
     // Fetch capture boxes
-    let cboxWhite = document.getElementById('cboxWhite')
-    let cboxBlack = document.getElementById('cboxBlack')
     let capturedByWhite = [];  // Keep track of pieces captured by white
     let capturedByBlack = [];  // Keep track of pieces captured by black
     let capturedPiece;
@@ -103,7 +105,7 @@ function playAgainstHuman(movesTable){
                 let moveElements = document.querySelectorAll('.selected-square');
                 sourceSquare = moveElements[0];
                 draggedPiece = moveElements[1];
-                dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, cboxWhite, cboxBlack, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
+                dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
             }
             else {
                 selectSquare(event);
@@ -124,12 +126,12 @@ function playAgainstHuman(movesTable){
 
         // When a piece is dropped on a square
         square.addEventListener('mouseup', (event) => {
-            dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, cboxWhite, cboxBlack, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
+            dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
         });
     });
 }
 
-function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, cboxWhite, cboxBlack, capturedByWhite, capturedByBlack, capturedPiece, pieceScore) {
+function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore) {
     let square = event.currentTarget;
     let castling = '';
     if (draggedPiece && sourceSquare) {
@@ -160,7 +162,7 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
                 if (capturedPiece){
 
                     // Find the numerical value of the captured piece and add it to pieceCount
-                    console.log(capturedPiece, pieceNameToValue(capturedPiece))
+                    // console.log(capturedPiece, pieceNameToValue(capturedPiece))
                     // console.log()
 
                     if (capturedPiece.split('-')[0] == 'black'){
@@ -170,17 +172,14 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
                         for (let piece of capturedByWhite){
                             capturedPieceCodes.push(pieceToUnicode(`black-${piece}`));
                         }
-                        cboxWhite.innerText = capturedPieceCodes.join('');
                     }
                     else {
                         let capturedPieceCodes = [];
-                        let capturebox = document.getElementById('captureboxBlack');
                         capturedByBlack.push(capturedPiece.split('-')[1]);
                         capturedByBlack = capturedByBlack.sort((a, b) => {return pieceSortOrder.indexOf(a) - pieceSortOrder.indexOf(b)})
                         for (let piece of capturedByBlack){
                             capturedPieceCodes.push(pieceToUnicode(`white-${piece}`));
                         }
-                        cboxBlack.innerText = capturedPieceCodes.join('');
                     }
 
                 }
@@ -199,27 +198,27 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
                     lastMove += '+';
                 }
                 if (turnToPlay == 'white'){
+                    // Find active dot and add to black player box
+                    let activePlayerDot = whitePlayerBox.children[0];
+                    blackPlayerBox.appendChild(activePlayerDot);
+
                     let row = movesTable.insertRow();
                     let whiteCell = row.insertCell();
                     whiteMove = `${targetSquare.id}`
                     turnToPlay = 'black';
                     whiteCell.textContent = `${moveCounter}. ${lastMove}`;
                     row.appendChild(whiteCell);
-
-                    // Find active dot and add to black player box
-                    let activePlayerDot = whitePlayerBox.children[0]
-                    blackPlayerBox.appendChild(activePlayerDot);
-                
                 }
                 else if (turnToPlay == 'black'){
+                    // Find active dot and add to white player box
+                    let activePlayerDot = blackPlayerBox.children[0];
+                    whitePlayerBox.appendChild(activePlayerDot);
+
                     let blackCell = movesTable.rows[movesTable.rows.length - 1].insertCell();
                     blackCell.textContent = `${lastMove}`;
                     blackMove = `${targetSquare.id}`
                     turnToPlay = 'white';
                     moveCounter++;
-                    // Find active dot and add to white player box
-                    let activePlayerDot = blackPlayerBox.children[0]
-                    whitePlayerBox.appendChild(activePlayerDot);
 
                 };
                 moveDictionary[moveCounter] = `${whiteMove} ${blackMove}`;
@@ -262,21 +261,15 @@ function startNewGame() {
         square.classList.remove('check-square');
     }
 
+    // Clear any visuals from squares (destination square, attacked square, legal moves dot)
+    removeSquareVisuals();
+
+
     // Remove the result overlay
-    const resultBox = document.querySelector('.result');
+    const resultBox = document.querySelector('.resultOverlay');
     if (resultBox){
         resultBox.remove();
     };
-
-    // Clear the captured pieces box
-    const captureboxWhite = document.getElementById('cboxWhite')
-    if (captureboxWhite){
-        captureboxWhite.innerText = '';
-    }
-    const captureboxBlack = document.getElementById('cboxBlack')
-    if (captureboxBlack){
-        captureboxBlack.innerText = '';
-    }
 
     // Reset the dictionary containing all board positions in the game
     allFENS = [INITIAL_FEN];
@@ -305,7 +298,6 @@ function startNewGame() {
     let whitePlayerBox = document.getElementById('playerBoxWhite');
     activePlayerDot.classList.add('dot', 'active-player-dot');
     whitePlayerBox.appendChild(activePlayerDot);
-
 }
 
 function undoMove() {
@@ -314,8 +306,9 @@ function undoMove() {
 
 function endGame(winnerColour, moveSquare, endMethod){
     winnerColour = winnerColour.replace(winnerColour[0], winnerColour[0].toUpperCase())
+    const chessBoard = document.querySelector('.chess-board');
     const endGameBox = document.createElement('div');
-    endGameBox.classList.add('result');
+    endGameBox.classList.add('resultOverlay');
     endGameBox.textContent = 'test';
 
     if (endMethod == 'checkmate'){
@@ -332,6 +325,7 @@ function endGame(winnerColour, moveSquare, endMethod){
     }
 
     document.body.appendChild(endGameBox);
+    chessBoard.appendChild(endGameBox);
 
     // Button for new game
     let newButton = document.createElement('button');

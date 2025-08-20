@@ -270,7 +270,7 @@ export function detectEnPassant(draggedPiece, sourceSquare, targetSquare, positi
         if (Math.abs(sourceSquare.code - targetSquare.code) == 16){
             for (var square of squares){
                 if (isOccupied(square, position)){
-                    if (isOccupied(square, position).split('-')[1] != draggedPieceColour){
+                    if (isOccupied(square, position).split('-')[0] != draggedPieceColour){
                         if (draggedPieceColour == 'white'){
                             enPassantSquare = squareLookupTable.valueToKey[targetSquare.code + 8]
                         }

@@ -7,59 +7,90 @@
 
 }
 
-/* Create Board */
+/* Create Page Header */
+.header {
+    color: white;
+    text-align: left;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 100;
+    /* padding: 0vw; */
+}
+
+
+/* Create Page Body */
 body {
     background-color: var(--colorbackground); 
-    color: #333;
-    font-family:'Trebuchet MS';
-    padding: 20px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 1%;
 }
 
-
-/* New game button */
-.buttonRow {
-    margin-bottom: 50px;
-}
-
-.buttons {
-    align-items: center;
-    background-color: var(--colorprimary);
-    border: none;
-    border-radius: 8px;
-    box-sizing: border-box;
-    color: var(--colorsecondary);
-    cursor: pointer;
+.main-container {
+    flex: 1;
     display: flex;
-    float: left;
-    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 320;
-    justify-content: center;
-    margin: auto;
-    margin-right: 8px;
-    padding: 8px 8px;
-    position: relative;
+    max-width: 1600px;
+    margin: 2rem auto;
+    gap: 1.5rem;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+
+/* Button Column - Left Side */
+.button-column {
+    flex: 0 0 8vw; /* Fixed width for button column */
+    background: var(--colorbackground);
+    border-right: 2px solid var(--coloraccent);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Buttons stretch to full width */
+}
+
+.button-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+    margin-bottom: 2rem;
+}
+
+/* Stacked Buttons */
+.button {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid #cbd5e0;
+    background: white;
+    color: #4a5568;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
     text-align: center;
-    vertical-align: baseline;
-    touch-action: manipulation;
 }
 
-.buttons:hover {
-    background-color: black;
+.button:hover {
+    background: #edf2f7;
+    border-color: #a0aec0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 
 /* Define the board and the squares */
 .chess-board {
+    aspect-ratio: 1/1;
     border: 2px solid #604020;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    height: 500px;
     margin: auto;
+    max-width: 500px;
     position: relative;
-    width: 500px;
+    width: 60vw;
 }
 
 .square{
@@ -95,10 +126,10 @@ body {
 }
 
 .active-player-dot {
+    aspect-ratio: 1/1;
     position: relative;
     left: 7.5px;
-    height: 10px;
-    width: 10px;
+    width: 2%;
     background-color: green;
     border-radius: 50%;
 }
@@ -116,15 +147,15 @@ body {
   }
 
 .allowedMovesDot {
+    aspect-ratio: 1/1;
     position: relative;
-    height: 15px;
-    width: 15px;
+    width: 20%;
     background-color: teal;
     border-radius: 50%;
 }
 
 .attackDot {
-    height: 100%;
+    aspect-ratio: 1/1;
     width: 100%;
     background-color: red;
     opacity: 0.35;
@@ -153,32 +184,36 @@ body {
 
 
 /* Display game result */
-.result {
-    position: relative;
-    display: flex;
-    margin: auto;
-    height: 500px;
-    width: 500px;
-    left: 0px;
-    top: -724px;
-    background-color: rgba(96, 64, 32, 0.5);
-    color: #000000;
-    font-weight: bold;
-    z-index: 10;
-    text-align: center;
+.resultOverlay {
     align-items: center;
+    background-color: rgba(96, 64, 32, 0.5);
+    bottom: 0px;
+    color: #000000;
+    display: flex;
+    font-size: min(2.75vw, 20px);
+    font-weight: bold;
     justify-content: center;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 0px;
+    z-index: 10;
 }
 
 .overlayNewGameButton {
-    position: absolute;
-    border: none;
-    width: 90px;
-    height: 25px;
     background-color: #000000;
+    border: none;
+    border-radius: 5px;
     color: #ffffff;
-    top: 275px;
-    border-radius: 7.5%;
+    height: 10%;
+    position: absolute;
+    top: 57.5%;
+    width: 25%;
+    max-width: 90px;
+    max-height: 25px;
+    font-size: min(2vw, 15px);
+    /* min-width: 60px; */
 }
 
 .overlayNewGameButton:hover{
@@ -192,25 +227,26 @@ body {
     border-collapse: collapse;
     background-color: #f0d9b5;
     color: black;
-    top: -575px;
-    left: 407.5px;
-    width: 250px;
+    top: max(-60vw, -500px);
+    left: min(50%, 380px);
+    /* left: ;/min(200vw, 600px); */
+    width: min(30vw, 175px);
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: min(2.5vw, 18);
 }
 
-.table-wrapper {
+/* .table-wrapper {
     max-height: 100px;      
     overflow-y: auto;
     display: block;
-}
+} */
 
 th, td {
     border: 1px solid black;
-    padding: 8px;
-    width: 10px;
-    text-align: center;
+    padding: 5px;
+    width: 20px;
   }
 
 
@@ -229,14 +265,17 @@ th, td {
 
 .playerbox{
     align-items: center;
+    box-sizing: border-box;
     color: black;
     display: flex;
-    height: 30px;
     justify-content: center;
     margin: auto;
     position: relative;
     text-align: center;
-    width: 480px;
+    width: 60vw;
+    height: 20%;
+    max-width: 500px;
+    font-size: min(2.5vw, 14pt);
 }
 
 .playerbox-black{
@@ -251,39 +290,6 @@ th, td {
     padding-left: 20px;
 
 }
-
-/* This box contains the captured black pieces and is placed on the white end of the board */
-/* .capturebox-white{
-    position: relative;
-    top: 487.5px;
-    left: 80px;
-    width: 340px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 25px;
-    background-color: #b58863;
-    margin: auto;
-} */
-
-/* This box contains the captured white pieces and is placed on the black end of the board */
-/* .capturebox-black{
-    position: relative;
-    top: -75px;
-    left: -80px;
-    width: 340px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 25px;
-    background-color: #f0d9b5;
-    margin: auto;
-} */
-
 
 /* Define Pieces */
 .piece {
@@ -363,3 +369,17 @@ th, td {
     background-image: url("../pieces/bk.png");
     --type: "black";
 }
+
+/* Footer */
+.footer {
+    /* background: var(--colorsecondary); */
+    position: absolute;
+    color: white;
+    text-align: right;
+    vertical-align: middle;
+    left: 0;
+    bottom: 0;
+    
+    width: 98%;
+}
+
