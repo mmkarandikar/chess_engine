@@ -105,7 +105,7 @@ function playAgainstHuman(movesTable){
                 let moveElements = document.querySelectorAll('.selected-square');
                 sourceSquare = moveElements[0];
                 draggedPiece = moveElements[1];
-                dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
+                dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore, movesTable);
             }
             else {
                 selectSquare(event);
@@ -126,12 +126,12 @@ function playAgainstHuman(movesTable){
 
         // When a piece is dropped on a square
         square.addEventListener('mouseup', (event) => {
-            dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore);
+            dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore, movesTable);
         });
     });
 }
 
-function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore) {
+function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackPlayerBox, capturedByWhite, capturedByBlack, capturedPiece, pieceScore, movesTable) {
     let square = event.currentTarget;
     let castling = '';
     if (draggedPiece && sourceSquare) {
@@ -244,7 +244,7 @@ function dropPiece(event, whiteMove, blackMove, lastMove, whitePlayerBox, blackP
 };
 
 // Starts a new game
-function startNewGame() {
+export function startNewGame() {
     // Initialise the move counter and board position
     moveCounter = 1;
     currentPosition = INITIAL_FEN;
@@ -278,8 +278,8 @@ function startNewGame() {
     renderBoard(INITIAL_FEN);
 
     // Initialise table to keep track of moves
-    let movesTable = document.getElementById('movesTable').getElementsByTagName('tbody')[0];
-    movesTable.classList.add('movesTable');
+    let movesTable = document.getElementById('moves-table').getElementsByTagName('tbody')[0];
+    movesTable.classList.add('moves-table');
     movesTable.innerText = '';
 
     // // Initialise text in result box

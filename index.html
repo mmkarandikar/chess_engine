@@ -12,34 +12,48 @@
 <script type="module" src="frontend/moves.js"></script>
 
 <body>
-  <div class="buttonRow">
-    <button id="newGame" class="buttons">New Game</button>
-    <!-- <button id="undoGame" class="buttons">Undo Move</button> -->
-  </div>
-
-  <div id="playerBoxBlack" class="playerbox playerbox-black">
-    Player 2 (black)
-  </div>
-  
-  <div class="chess-board">
-    <script type="module">
-      import { createBoard } from "./frontend/functions.js"
-      createBoard();
-      </script>
-  </div>
-
-  <div id="playerBoxWhite" class="playerbox playerbox-white">
-    Player 1 (white)
-    <div id="cboxWhite" class="capturebox-white"></div>
-  </div>
-
-
-  <table id="movesTable" class="moveTable">
-    <div class="table-wrapper">
-      <tbody>
-        <!-- Moves are recorded here -->
-      </tbody>
+  <header>
+    <div id="site-logo">
+      <img src="site-logo.png">
     </div>
-  </table>
+    <div id="menu">
+      <button id="newGame" class="button">New Game</button>
+      <!-- <button id="settings" class="button">Settings</button> -->
+    </div> 
+  </header>
+
+    <main class="main-container">
+      <section class="main-content">
+        <div id="playerBoxBlack" class="playerbox playerbox-black">
+          Player 2 (black)
+        </div>
+        <div class="chess-board">
+          <script type="module">
+          import { createBoard } from "./frontend/functions.js"
+          import { startNewGame } from "./frontend/root.js"
+          createBoard();
+          startNewGame();
+        </script>
+        </div>
+          <div id="playerBoxWhite" class="playerbox playerbox-white">
+          Player 1 (white)
+        </div>
+      </section>
+
+
+      <div class="table-scrollable">
+        <table id="moves-table">
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+  </main>
+
+
+
+  <!-- <footer class="footer">
+    <p>&copy; 2025 Mandar Karandikar.</p>
+  </footer> -->
+
 </body>
 </html>
